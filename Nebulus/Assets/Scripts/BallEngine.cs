@@ -3,8 +3,9 @@ using System.Collections;
 
 public class BallEngine : MonoBehaviour {
 
-    float TimeOut = 1f;
-    float speed = 20f;
+    private bool isActive = true;
+    private float timeOut = 1f;
+    public float speed = 35f;
     public GameObject diirectionOfShooting;
 
 	// Use this for initialization
@@ -23,18 +24,24 @@ public class BallEngine : MonoBehaviour {
             transform.RotateAround(Vector3.zero, Vector3.up, speed * Time.deltaTime * -1);
         }
 
-        TimeOut -= Time.deltaTime;
-        if (TimeOut < 0f)
+        timeOut -= Time.deltaTime;
+        if (timeOut < 0f)
+        {
+            Destroy(this.gameObject);
+        }
+
+        if (!isActive)
         {
             Destroy(this.gameObject);
         }
 	}
 
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider targetCollide)
     {
-        if (collision.gameObject.tag == "Target")
+        if (targetCollide.gameObject.tag == "Target")
         {
-            Destroy(collision.gameObject);
+            Destroy(targetCollide.gameObject);
+            isActive = false;
         }
     }
 }

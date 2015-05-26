@@ -15,12 +15,11 @@ public class LizardScript : MonoBehaviour {
         }
         
 	}
-    void OnCollisionEnter(Collision EnemyCollision)
+    void OnTriggerEnter(Collider BulletCollide)
     {
-        if (EnemyCollision.gameObject.name == "Bullet")
+        if (BulletCollide.gameObject.tag == "Bullet")
         {
             isLive = false;
         }
     }
-    
 }

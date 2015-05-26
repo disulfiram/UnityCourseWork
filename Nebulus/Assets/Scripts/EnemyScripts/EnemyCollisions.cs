@@ -2,28 +2,25 @@
 using System.Collections;
 
 public class EnemyCollisions : MonoBehaviour {
-    //public Animator control;
-    //public GameObject player;
     public float playerPushedX;
     public float playerPushedZ;
-
-	// Use this for initialization
-	void Start () {
-        //player = GameObject.FindGameObjectWithTag("PlayerSprite");
-        //control = player.GetComponent<Animator>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-       
-	}
+    public float pushDistance;
 
     void OnCollisionEnter(Collision playerCollision)
     {
         if (playerCollision.gameObject.tag == "Player")
         {
-            playerCollision.gameObject.transform.position += new Vector3(playerPushedX, -1f * Time.deltaTime, playerPushedZ);
-            //control.SetBool("Fall", true);
+            if (pushDistance != 0)
+            {
+                playerCollision.gameObject.transform.position = new Vector3(
+                    playerCollision.gameObject.transform.position.x * pushDistance, 
+                    playerCollision.gameObject.transform.position.y, 
+                    playerCollision.gameObject.transform.position.z * pushDistance);
+            }
+            else
+            {
+                playerCollision.gameObject.transform.position += new Vector3(playerPushedX, -1f * Time.deltaTime, playerPushedZ);
+            }
         }
     }
 }
